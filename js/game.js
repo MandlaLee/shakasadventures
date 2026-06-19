@@ -1,6 +1,6 @@
 /* =========================================
    SHAKA'S ADVENTURES
-   VERSION 0.1
+   VERSION 0.2
    KWA NANDI VILLAGE
 ========================================= */
 
@@ -21,9 +21,9 @@ canvas.height = window.innerHeight;
 
 const player = {
     x: 585,
-    y: 620,
-    width: 32,
-    height: 32,
+    y: 720,
+    width: 20,
+    height: 20,
     speed: 4
 };
 
@@ -41,6 +41,77 @@ window.addEventListener("keydown", (e) => {
 window.addEventListener("keyup", (e) => {
     keys[e.key] = false;
 });
+
+
+/* =========================================
+   HUT DATA
+========================================= */
+
+const huts = [
+
+    // Top Row
+
+    {
+        name: "Elder Hut",
+        x: 600,
+        y: 140
+    },
+
+    {
+        name: "Hunter Hut",
+        x: 320,
+        y: 180
+    },
+
+    {
+        name: "Trader Hut",
+        x: 880,
+        y: 180
+    },
+
+    // Middle Row
+
+    {
+        name: "Ayanda Hut",
+        x: 220,
+        y: 460
+    },
+
+    {
+        name: "Warrior Hut",
+        x: 980,
+        y: 460
+    },
+
+    // Lower Row
+
+    {
+        name: "Family Hut C",
+        x: 450,
+        y: 560
+    },
+
+    {
+        name: "Family Hut D",
+        x: 750,
+        y: 560
+    },
+
+    // Bottom Row
+
+    {
+        name: "Themba Hut",
+        x: 380,
+        y: 650
+    },
+
+    {
+        name: "Nandi Hut",
+        x: 820,
+        y: 650
+    }
+
+];
 
 
 /* =========================================
@@ -74,7 +145,7 @@ function update() {
 
 function drawHut(x, y) {
 
-    // Hut Base
+    // Base
 
     ctx.fillStyle = "#7b552d";
 
@@ -88,9 +159,9 @@ function drawHut(x, y) {
     );
     ctx.fill();
 
-    // Hut Roof
+    // Roof
 
-    ctx.fillStyle = "#d1b16a";
+    ctx.fillStyle = "#d4b16a";
 
     ctx.beginPath();
     ctx.arc(
@@ -101,6 +172,95 @@ function drawHut(x, y) {
         Math.PI * 2
     );
     ctx.fill();
+
+}
+
+
+/* =========================================
+   DRAW KRAAL
+========================================= */
+
+function drawKraal() {
+
+    ctx.strokeStyle = "#4a2c15";
+    ctx.lineWidth = 10;
+
+    ctx.beginPath();
+
+    ctx.arc(
+        600,
+        350,
+        120,
+        0,
+        Math.PI * 2
+    );
+
+    ctx.stroke();
+
+}
+
+
+/* =========================================
+   DRAW FENCE
+========================================= */
+
+function drawFence() {
+
+    ctx.strokeStyle = "#5a3a1e";
+    ctx.lineWidth = 8;
+
+    // Left
+
+    ctx.beginPath();
+    ctx.moveTo(150, 50);
+    ctx.lineTo(150, 800);
+    ctx.stroke();
+
+    // Top
+
+    ctx.beginPath();
+    ctx.moveTo(150, 50);
+    ctx.lineTo(1050, 50);
+    ctx.stroke();
+
+    // Right
+
+    ctx.beginPath();
+    ctx.moveTo(1050, 50);
+    ctx.lineTo(1050, 800);
+    ctx.stroke();
+
+    // Bottom Left
+
+    ctx.beginPath();
+    ctx.moveTo(150, 800);
+    ctx.lineTo(520, 800);
+    ctx.stroke();
+
+    // Bottom Right
+
+    ctx.beginPath();
+    ctx.moveTo(680, 800);
+    ctx.lineTo(1050, 800);
+    ctx.stroke();
+
+}
+
+
+/* =========================================
+   DRAW GATE
+========================================= */
+
+function drawGate() {
+
+    ctx.fillStyle = "#b88a55";
+
+    ctx.fillRect(
+        520,
+        792,
+        160,
+        16
+    );
 
 }
 
@@ -132,6 +292,7 @@ function drawVillage() {
     // Ground
 
     ctx.fillStyle = "#b88a55";
+
     ctx.fillRect(
         0,
         0,
@@ -139,69 +300,15 @@ function drawVillage() {
         canvas.height
     );
 
-    // Outer Fence
+    drawFence();
 
-    ctx.strokeStyle = "#5a3a1e";
-    ctx.lineWidth = 8;
+    drawGate();
 
-    ctx.strokeRect(
-        150,
-        50,
-        900,
-        650
-    );
+    drawKraal();
 
-    // Gate Opening
-
-    ctx.fillStyle = "#b88a55";
-
-    ctx.fillRect(
-        560,
-        690,
-        80,
-        20
-    );
-
-    // Central Kraal
-
-    ctx.beginPath();
-
-    ctx.strokeStyle = "#4a2c15";
-    ctx.lineWidth = 10;
-
-    ctx.arc(
-        600,
-        350,
-        120,
-        0,
-        Math.PI * 2
-    );
-
-    ctx.stroke();
-
-    // Elder Hut
-
-    drawHut(600, 140);
-
-    // Hunter Hut
-
-    drawHut(320, 180);
-
-    // Trader Hut
-
-    drawHut(820, 180);
-
-    // Ayanda Hut
-
-    drawHut(250, 460);
-
-    // Warrior Hut
-
-    drawHut(900, 460);
-
-    // Nandi Hut
-
-    drawHut(600, 580);
+    huts.forEach(hut => {
+        drawHut(hut.x, hut.y);
+    });
 
 }
 
